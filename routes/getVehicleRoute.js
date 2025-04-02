@@ -5,8 +5,8 @@ const router = express.Router();
 const getVehicleController = require('../controllers/getVehicleController');
 
 router.route("/").get((req, res)=>{
-    res.send('Welcome to Nigrani vehicle report service');
+    res.send('Welcome to Balasore vehicle report service');
 });
-router.route("/getvehicles").get(getVehicleController)
+router.route("/getTruckReport").get(getVehicleController)
 
 module.exports = router; 
