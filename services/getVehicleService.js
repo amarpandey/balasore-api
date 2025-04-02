@@ -98,7 +98,6 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
                     "idling_engine_hours",
                     "avg_speed",
                     "max_speed",
-                    "utilization",
                     "distance",
                     "fuel_consumed",
                     "kmpl",
