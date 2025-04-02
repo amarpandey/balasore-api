@@ -117,7 +117,6 @@
     "range-parser": "^1.2.1",
     "raw-body": "^2.5.1",
     "readdirp": "^3.6.0",
-    "request": "^2.88.2",
     "safe-buffer": "^5.2.1",
     "safer-buffer": "^2.1.2",
     "semver": "^7.5.4",
@@ -141,7 +140,6 @@
     "unpipe": "^1.0.0",
     "uri-js": "^4.4.1",
     "utils-merge": "^1.0.1",
-    "uuid": "^3.4.0",
     "vary": "^1.1.2",
     "verror": "^1.10.0",
     "yallist": "^4.0.0"
