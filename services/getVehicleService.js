@@ -65,17 +65,17 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
             
             const set1 = resultRowsData1.data;
             const set2 = resultRowsData2.data;
-            let set4;
+            let set4 =[];
 
             for(i=0; i<set1.length; i++){
-                console.log(set1[i].c);
-                console.log(set2[i].c);
+                // console.log(set1[i].c);
+                // console.log(set2[i].c);
                 
                 const set3 = set2[i].c.slice(2);
-                console.log('>>>>>>>>>>>>>>>>>');
-                console.log(set3);
-                set4 = (set2.indexOf(set1[i])) ? [...set1[i].c, ...set3] : set1[i].c;
-                console.log(set4);
+                // console.log('>>>>>>>>>>>>>>>>>');
+                // console.log(set3);
+                set4.push((set2.indexOf(set1[i])) ? [...set1[i].c, ...set3] : set1[i].c);
+                // console.log(set4);
             }
 
 
