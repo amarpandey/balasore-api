@@ -64,11 +64,14 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
             // Set 1 Data
             
             const set1 = resultRowsData1.data;
+            // console.log(set1[6]);
             const set2 = resultRowsData2.data;
             let set4 =[];
 
             for(i=0; i<set1.length; i++){
-                // console.log(set1[i].c);
+                console.log(set1[i].c[6]);
+
+                set1[i].c[6] = (set1[i].c[6].t) ? set1[i].c[6].t : set1[i].c[6];
                 // console.log(set2[i].c);
                 
                 const set3 = set2[i].c.slice(2);
