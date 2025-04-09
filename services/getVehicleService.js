@@ -20,7 +20,7 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
        
         let vehicleData;
 
-        // if(reportType === 'group'){
+        if(reportType == 'group'){
             console.log('fetched report type is: ' + reportType, reportFrom, reportTo );
             // Making vehicle detail call
             console.log(`welcome to get vehicle data`);
@@ -61,20 +61,13 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
                 }
             });
 
-            // Set 1 Data
-            
             const set1 = resultRowsData1.data;
-            // console.log(set1[6]);
             const set2 = resultRowsData2.data;
             let set4 =[];
 
             for(i=0; i<set1.length; i++){
-                // console.log(set1[i].c[6]);
                 set1[i].c[5] = set1[i].c[5].slice(0, -5);
-
                 set1[i].c[6] = (set1[i].c[6].t) ? set1[i].c[6].t.slice(0, -3) : set1[i].c[6].slice(0, -5);
-                // console.log(set2[i].c);
-                
                 const set3 = set2[i].c.slice(2);
                 set3[0] = set3[0].slice(0, -3);
                 set3[1] = set3[1].slice(0, -2);
@@ -82,22 +75,8 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
                 set3[5] = set3[5].slice(0, -2);
                 set3[8] = set3[8].slice(0, -2);
                 set3[9] = set3[9].slice(0, -2);
-                console.log('>>>>>>>>>>>>>>>>>');
-                console.log(set1[i]);
-
-                console.log(set3[0]);
                 set4.push((set2.indexOf(set1[i])) ? [...set1[i].c, ...set3] : set1[i].c);
-                // console.log(set4);
             }
-
-
-            
-
-
-
-            // console.log(set1.map((item)=>{
-            //     return item.c;
-            // }));
 
             const responseData = [
                 {
@@ -128,55 +107,73 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
             ];
 
             vehicleData = responseData;
-        // }else if(reportType == 'parking'){
-        //     // Making vehicle detail call
-        //     console.log(`welcome to get vehicle parking data`);
-        //     const vehicleDetails = await axios({
-        //         method: 'get',
-        //         url:'https://hst-api.wialon.com/wialon/ajax.html',
-        //         params:{
-        //             svc: 'report/exec_report',
-        //             params: '{"reportResourceId":22542222,"reportTemplateId":5,"reportTemplate":null,"reportObjectId":"27732669","reportObjectSecId":0,"reportObjectIdList":[28093527],"interval":{"from":'+reportFrom+',"to":'+reportTo+',"flags":0}}',
-        //             sid: token
-        //         }
-        //     });
+        }else {
+            console.log('fetched report type is: ' + reportType, reportFrom, reportTo );
+            // Making vehicle detail call
+            console.log(`welcome to get vehicle data`);
+            const vehicleDetails = await axios({
+                method: 'get',
+                url:'https://hst-api.wialon.com/wialon/ajax.html',
+                params:{
+                    svc: 'report/exec_report',
+                    params: '{"reportResourceId":13906320,"reportTemplateId":6,"reportTemplate":null,"reportObjectId":"28556289","reportObjectSecId":0,"reportObjectIdList":[],"interval":{"from":'+reportFrom+',"to":'+reportTo+',"flags":0}}',
+                    sid: token
+                }
+            });
 
 
-        //     const resultRows = vehicleDetails.layerCount;
-        //     console.log(resultRows);
+            const resultRows = vehicleDetails;
+            // console.log(resultRows);
 
-        //     // Fetching result rows
-        //         // Making vehicle detail call
-        //         const resultRowsData = await axios({
-        //             method: 'get',
-        //             url:'https://hst-api.wialon.com/wialon/ajax.html',
-        //             params:{
-        //                 svc: 'report/select_result_rows',
-        //                 params: '{"tableIndex":0,"config":{"type":"range","data":{"from":0,"to":1,"level":2}}}',
-        //                 sid: token
-        //             }
-        //         });
+            // Fetching result rows
+            // Making vehicle detail call
+            const resultRowsData = await axios({
+                method: 'get',
+                url:'https://hst-api.wialon.com/wialon/ajax.html',
+                params:{
+                    svc: 'report/get_result_rows',
+                    params: '{"tableIndex":0,"indexFrom":0,"indexTo":100}',
+                    sid: token
+                }
+            });
 
-        //     const responseData = [
-        //         {
-        //         "mapping":[
-        //             "id",
-        //             "grouping",
-        //             "interval_beginning",
-        //             "interval_end",
-        //             "parking_duration",
-        //             "total_data_time",
-        //             "location"
-        //         ]
-        //         },
-        //         {
-        //         "data": resultRowsData.data
-        //         }
-        //     ];
+            const machineData = resultRowsData.data.map((item)=>{
+                console.log('>>>>>>>', item);
+                item.c[3] = item.c[3].slice(0,-2);
+                item.c[5] = item.c[5].slice(0,-2);
+                item.c[6] = item.c[6].slice(0,-2);
+                item.c[9] = item.c[9].slice(0,-2);
+                item.c[10] = item.c[10].slice(0,-2);
+                item.c[11] = item.c[11].slice(0,-2);
+                return item.c;
+            });
 
-        //     vehicleData = responseData;
+            const responseData = [
+                {
+                "mapping":[
+
+                    "id",
+                    "grouping",
+                    "engine_hours",
+                    "consumption",
+                    "avg_consumption",
+                    "initial_fuel_level",
+                    "final_fuel_level",
+                    "total_fillings",
+                    "total_thefts",
+                    "filled",
+                    "stolen",
+                    "utilization"
+                ]
+                },
+                {
+                "data": machineData
+                }
+            ];
+
+            vehicleData = responseData;
         
-        // }
+        }
 
           
 
