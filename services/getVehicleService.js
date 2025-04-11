@@ -140,6 +140,7 @@ const getVehicleServices = async (sidToken, reportFrom, reportTo, reportType) =>
             const machineData = resultRowsData.data.map((item)=>{
                 console.log('>>>>>>>', item);
                 item.c[3] = item.c[3].slice(0,-2);
+                item.c[4] = item.c[4].slice(0,-4);
                 item.c[5] = item.c[5].slice(0,-2);
                 item.c[6] = item.c[6].slice(0,-2);
                 item.c[9] = item.c[9].slice(0,-2);
